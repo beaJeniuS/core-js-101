@@ -44,8 +44,8 @@ function getComposition(/* f, g */) {
  *   power05(16) => 4
  *
  */
-function getPowerFunction(/* exponent */) {
-  throw new Error('Not implemented');
+function getPowerFunction(exponent) {
+  return (num) => num ** exponent;
 }
 
 
@@ -147,10 +147,13 @@ function logger(/* func, logFunc */) {
  *   partialUsingArguments(fn, 'a','b','c')('d') => 'abcd'
  *   partialUsingArguments(fn, 'a','b','c','d')() => 'abcd'
  */
-function partialUsingArguments(/* fn, ...args1 */) {
-  throw new Error('Not implemented');
+function partialUsingArguments(fn, ...args1) {
+  const args = Array.from(args1);
+  return function fn2(...args2) {
+    const allArgs = args.concat([].slice.call(args2));
+    return fn.apply(this, allArgs);
+  };
 }
-
 
 /**
  * Returns the id generator function that returns next integer starting
@@ -169,10 +172,14 @@ function partialUsingArguments(/* fn, ...args1 */) {
  *   getId4() => 7
  *   getId10() => 11
  */
-function getIdGeneratorFunction(/* startFrom */) {
-  throw new Error('Not implemented');
+function getIdGeneratorFunction(startFrom) {
+  let startVal = startFrom;
+  return () => {
+    const current = startVal;
+    startVal += 1;
+    return current;
+  };
 }
-
 
 module.exports = {
   getComposition,
